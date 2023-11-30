@@ -1,0 +1,26 @@
+version: '2.1'
+
+services:
+  protonmail-bridge:
+    image: protonmail-bridge:latest
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+    container_name: protonmail-bridge
+    networks:
+      - protonmail-net
+    ports:
+      - 1025:25/tcp
+      - 1143:143/tcp
+    restart: unless-stopped
+    stdin_open: true 
+    tty: true
+    volumes:
+      - "protonmail:/root"
+
+volumes:
+  protonmail:
+    name: protonmail
+
+networks:
+  protonmail-net:
